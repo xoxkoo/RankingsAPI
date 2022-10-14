@@ -1,5 +1,4 @@
 import json from "./json.js";
-const file = json
 
 const options = {
   method: 'GET',
@@ -10,26 +9,50 @@ const options = {
   }
 };
 
-axios.request(options).then(function (response) {
-	handleData(response.data)
-}).catch(function (error) {
-	console.error(error);
-});
+// axios.request(options).then(function (response) {
+// 	handleData(response.data)
+// }).catch(function (error) {
+// 	console.error(error);
+// });
 
-function handleData(response) {
-	const table = document.querySelector('.responsive-table')
+handleData(json)
 
-	for (let index = 0; index < 10; index++) {
+window.addEventListener('scroll', function (event) {
+	const tableHeight = document.getElementById('rankings_table').offsetHeight
+	if (window.scrollY + window.innerHeight >= tableHeight - (tableHeight * 0.25)) {
+		handleData(json, document.getElementById('rankings_table_body').childNodes.length, document.getElementById('rankings_table_body').childNodes.length + 100)
+	}
+
+})
+console.log();
+
+function handleData(response, start = 0, end = 100) {
+	const tableBody = document.getElementById('rankings_table_body')
+
+	for (let index = start; index < end; index++) {
 		const player = response.rankings[index];
-
-		const row = `
-				<li class="table-row">
-					<div class="col col-1" data-label="#">${index+1}</div>
-					<div class="col col-2" data-label="Name">${player.rowName}</div>
-					<div class="col col-3" data-label="Nationality">${player.team.country.name}</div>
-					<div class="col col-4" data-label="Points">${player.points}</div>
-				</li>`
-		table.innerHTML += row
+		if (player) {
+			const items = [index+1, player.rowName, player.team.country.name, player.points]
+			tableBody.appendChild(createRow(items))
+		}
 
 	}
+}
+
+function createRow(items) {
+	const row = document.createElement('tr')
+	let cell = ''
+	let textNode = ''
+
+	for (let i = 0; i < items.length; i++) {
+		const element = items[i]
+
+		cell = document.createElement("td")
+		textNode = document.createTextNode(element)
+
+		cell.appendChild(textNode);
+		row.appendChild(cell);
+	}
+
+	return row
 }
