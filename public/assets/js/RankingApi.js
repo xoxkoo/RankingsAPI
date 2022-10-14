@@ -1,40 +1,20 @@
-import json from "./json.js";
+import json from "../data/json.js";
 
 export default class RankingApi {
 
 	constructor() {
-		this.options = {
-			method: 'GET',
-			url: 'https://tennisapi1.p.rapidapi.com/api/tennis/rankings/atp',
-			headers: {
-				'X-RapidAPI-Key': '9b7552900emshff7c6f33a8f1847p11f2e8jsn90fd18e3b266',
-				'X-RapidAPI-Host': 'tennisapi1.p.rapidapi.com'
-			}
-		}
-
-		this.json = false
 		this.index = 0
 		this.tableBody = document.getElementById('rankings_table_body')
 		this.loaded = false
+		this.api = '/api'
 
-
-		// this.scrolling = false
-		// this.scrollListener()
 	}
 
-	getData() {
-		if (! this.json) {
-			// axios.request(this.options).then(function (response) {
-			// 	this.json = response.data
-			// 	this.handleData(this.json)
-			// }).catch(function (error) {
-			// 	console.error(error);
-			// })
-			this.handleData(json)
-			this.json = json
-		}
-		else if(! this.loaded) {
-			this.handleData(this.json, this.index + 100)
+	async getData() {
+		if(! this.loaded) {
+			const response = await (await fetch(this.api)).json()
+
+			this.handleData(response, this.index + 100)
 		}
 
 
@@ -104,7 +84,6 @@ export default class RankingApi {
 			const element = items[i]
 
 			cell = document.createElement("td")
-			// textNode = document.createTextNode(element)
 
 			cell.appendChild(element);
 
@@ -119,41 +98,6 @@ export default class RankingApi {
 		html = html.trim(); // Never return a text node of whitespace as the result
 		template.innerHTML = html;
 		return template.content.firstChild;
-	}
-
-	scrollListenerTest() {
-		// if (! this.loaded) {
-
-		// 	const c = this
-		// 	window.addEventListener('scroll', function() {
-		// 		c.scrolling = true
-		// 	}, { passive: true })
-
-		// 	setInterval( function() {
-		// 		if (c.scrolling) {
-
-		// 			c.scrolling = false;
-		// 			const tableHeight = document.getElementById('rankings_table').offsetHeight
-
-		// 			if (window.scrollY + window.innerHeight >= tableHeight - (tableHeight * 0.25)) {
-		// 				c.getData()
-		// 			}
-
-		// 		}
-		// 	}, 150)
-		// }
-	}
-
-	scrollListener() {
-		const c = this
-
-		window.addEventListener('scroll', function() {
-			const tableHeight = document.getElementById('rankings_table').offsetHeight
-
-			if (window.scrollY + window.innerHeight >= (tableHeight * 0.75)) {
-				this.getData()
-			}
-		})
 	}
 
 }

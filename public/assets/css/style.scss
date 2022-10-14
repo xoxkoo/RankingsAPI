@@ -17,10 +17,10 @@ $color_primary: #1fb3e1;
 	 }
 
 	 & th {
-		padding: 1em;
+		padding: 1.2em .5em;
 	 }
 	 & td {
-		padding: .7em .9em;
+		padding: .9em .5em;
 	 }
 
 	 & tbody tr {
@@ -35,9 +35,15 @@ $color_primary: #1fb3e1;
     	border-bottom: 2px solid $color_primary;
 	}
 
-	& span svg {
-		padding-right: 7px;
+	& span {
+		display: flex;
+		align-items: center;
 	}
+		& svg {
+			height: .9em;
+			width: .9em;
+			padding-right: 7px;
+		}
 }
 
 @media (min-width: 500px) {
