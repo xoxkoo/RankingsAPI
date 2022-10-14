@@ -1,12 +1,13 @@
 import RankingApi from  "./RankingApi.js"
 
-const o = new RankingApi();
-o.getData()
+const rankings = new RankingApi();
+rankings.getData()
 
-// window.addEventListener('scroll', function (event) {
-// 	const tableHeight = document.getElementById('rankings_table').offsetHeight
-// 	if (window.scrollY + window.innerHeight >= tableHeight - (tableHeight * 0.25)) {
-// 		handleData(json, document.getElementById('rankings_table_body').childNodes.length, document.getElementById('rankings_table_body').childNodes.length + 100)
-// 	}
+window.addEventListener('scroll', function() {
+	const tableHeight = document.getElementById('rankings_table').offsetHeight
 
-// })
+	if (window.scrollY + window.innerHeight >= (tableHeight * 0.75)) {
+		// console.log(this.index);
+		rankings.getData()
+	}
+})

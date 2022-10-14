@@ -1,10 +1,8 @@
 $color_primary: #1fb3e1;
 
-body {
-  font-family: 'lato', sans-serif;
-}
 
 #rankings_table {
+	font-family: 'lato', sans-serif;
 	width: 100%;
 	border-collapse: collapse;
 	margin: 25px auto;
@@ -35,6 +33,10 @@ body {
 
 	& tbody tr:last-of-type {
     	border-bottom: 2px solid $color_primary;
+	}
+
+	& span svg {
+		padding-right: 7px;
 	}
 }
 
